@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My JavaScript Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2d3436;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #636e72;
+            font-size: 1.1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: #2d3436;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: #636e72;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My JavaScript Projects</h1>
+            <p class="subtitle">A collection of interactive web applications built with JavaScript</p>
+        </header>
+
+        <div class="projects-grid">
+            <a href="QuotoGenerators.html" class="project-card">
+                <div class="project-icon">💭</div>
+                <h2 class="project-title">Quote Generator</h2>
+                <p class="project-description">Generate inspiring quotes with a simple click. Perfect for daily motivation and sharing wisdom.</p>
+            </a>
+
+            <a href="tipcalculator.html" class="project-card">
+                <div class="project-icon">💰</div>
+                <h2 class="project-title">Tip Calculator</h2>
+                <p class="project-description">Calculate tips easily and split bills among friends with this handy calculator.</p>
+            </a>
+
+            <a href="WordCounter.html" class="project-card">
+                <div class="project-icon">📝</div>
+                <h2 class="project-title">Word Counter</h2>
+                <p class="project-description">Count words, characters, and sentences in your text with this useful tool.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Quote Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <style>     
+              
+               
+ 
+        :root {
+            --bg-color: #0f0e17;
+            --text-color: #fffffe;
+            --card-bg: #1f1e28;
+            --button-bg: #ff8906;
+            --button-text: #0f0e17;
+            --accent-color: #e53170;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .quote-box {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-box::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 150px;
+            color: var(--accent-color);
+            opacity: 0.1;
+            font-family: 'Georgia', serif;
+        }
+
+        .quote-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        #quote-text {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            transition: opacity 0.3s ease;
+        }
+
+        #quote-author {
+            font-style: italic;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            transition: opacity 0.3s ease;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(229, 49, 112, 0.4);
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .bubble {
+            position: fixed;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-color), var(--button-bg));
+            opacity: 0.1;
+            animation: float 15s infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -50px) rotate(90deg); }
+            50% { transform: translate(0, -100px) rotate(180deg); }
+            75% { transform: translate(-50px, -50px) rotate(270deg); }
+        }
+
+        #category-select {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+        }
+
+        #favorites-list {
+            margin-top: 30px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .favorite-quote {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        #share-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .share-button {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .share-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <button id="theme-toggle"><i class="fas fa-sun"></i></button>
+
+    <div class="container">                                                                                                        
+        <h1>Inspiring Quotes</h1>
+        <select id="category-select">
+            <option value="all">All Categories</option>
+            <option value="motivation">Motivation</option>
+            <option value="success">Success</option>
+            <option value="life">Life</option>
+            <option value="love">Love</option>
+        </select>
+        <div class="quote-box">
+            <p id="quote-text">Click the button below to generate a new quote</p>
+            <p id="quote-author"></p>
+            <div class="button-container">
+                <button id="generate-btn">Generate Quote</button>
+                <button id="copy-btn">Copy to Clipboard</button>
+                <button id="favorite-btn">Add to Favorites</button>
+            </div>
+            <div id="share-buttons">
+                <button class="share-button" id="share-twitter"><i class="fab fa-twitter"></i></button>
+                <button class="share-button" id="share-facebook"><i class="fab fa-facebook-f"></i></button>
+            </div>
+        </div>
+        <div id="favorites-list">
+            <h2>Favorite Quotes</h2>
+            <!-- Favorite quotes will be added here dynamically -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        const quotes = [
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs", category: "motivation" },
+            { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill", category: "success" },
+            { text: "Life is what happens to you while you're busy making other plans.", author: "John Lennon", category: "life" },
+            { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela", category: "motivation" },
+            { text: "In the end, it's not the years in your life that count. It's the life in your years.", author: "Abraham Lincoln", category: "life" },
+            { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins", category: "motivation" },
+            { text: "Love all, trust a few, do wrong to none.", author: "William Shakespeare", category: "love" },
+            { text: "Success usually comes to those who are too busy to be looking for it.", author: "Henry David Thoreau", category: "success" },
+            { text: "The best way to predict the future is to create it.", author: "Peter Drucker", category: "success" },
+            { text: "Love is composed of a single soul inhabiting two bodies.", author: "Aristotle", category: "love" }
+        ];
+
+        const quoteText = document.getElementById("quote-text");
+        const quoteAuthor = document.getElementById("quote-author");
+        const generateBtn = document.getElementById("generate-btn");
+        const copyBtn = document.getElementById("copy-btn");
+        const favoriteBtn = document.getElementById("favorite-btn");
+        const themeToggle = document.getElementById("theme-toggle");
+        const categorySelect = document.getElementById("category-select");
+        const favoritesList = document.getElementById("favorites-list");
+        const shareTwitter = document.getElementById("share-twitter");
+        const shareFacebook = document.getElementById("share-facebook");
+
+        let currentQuote = null;
+
+        function generateQuote() {
+            const selectedCategory = categorySelect.value;
+            const filteredQuotes = selectedCategory === 'all' 
+                ? quotes 
+                : quotes.filter(quote => quote.category === selectedCategory);
+
+            const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+            currentQuote = filteredQuotes[randomIndex];
+
+            quoteText.style.opacity = 0;
+            quoteAuthor.style.opacity = 0;
+            
+            setTimeout(() => {
+                quoteText.textContent = `"${currentQuote.text}"`;
+                quoteAuthor.textContent = `- ${currentQuote.author}`;
+                quoteText.style.opacity = 1;
+                quoteAuthor.style.opacity = 1;
+            }, 300);
+        }
+
+        function copyToClipboard() {
+            const text = `${quoteText.textContent} ${quoteAuthor.textContent}`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Quote copied to clipboard!");
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle("light-mode");
+            const icon = themeToggle.querySelector("i");
+            icon.classList.toggle("fa-sun");
+            icon.classList.toggle("fa-moon");
+
+            if (document.body.classList.contains("light-mode")) {
+                document.documentElement.style.setProperty('--bg-color', '#fffffe');
+                document.documentElement.style.setProperty('--text-color', '#0f0e17');
+                document.documentElement.style.setProperty('--card-bg', '#f2f4f6');
+                document.documentElement.style.setProperty('--button-bg', '#ff8906');
+                document.documentElement.style.setProperty('--button-text', '#fffffe');
+            } else {
+                document.documentElement.style.setProperty('--bg-color', '#0f0e17');
+                document.documentElement.style.setProperty('--text-color', '#fffffe');
+                document.documentElement.style.setProperty('--card-bg', '#1f1e28');
+                document.documentElement.style.setProperty('--button-bg', '#ff8906');
+                document.documentElement.style.setProperty('--button-text', '#0f0e17');
+            }
+        }
+
+        function addToFavorites() {
+            if (currentQuote) {
+                const favoriteQuote = document.createElement('div');
+                favoriteQuote.classList.add('favorite-quote');
+                favoriteQuote.innerHTML = `<p>"${currentQuote.text}" - ${currentQuote.author}</p>`;
+                favoritesList.appendChild(favoriteQuote);
+            }
+        }
+
+        function shareTweet() {
+            if (currentQuote) {
+                const tweetText = encodeURIComponent(`"${currentQuote.text}" - ${currentQuote.author}`);
+                window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank');
+            }
+        }
+
+        function shareFacebookPost() {
+            if (currentQuote) {
+                const postText = encodeURIComponent(`"${currentQuote.text}" - ${currentQuote.author}`);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&quote=${postText}`, '_blank');
+            }
+        }
+
+        generateBtn.addEventListener("click", generateQuote);
+        copyBtn.addEventListener("click", copyToClipboard);
+        favoriteBtn.addEventListener("click", addToFavorites);
+        themeToggle.addEventListener("click", toggleTheme);
+        categorySelect.addEventListener("change", generateQuote);
+        shareTwitter.addEventListener("click", shareTweet);
+        shareFacebook.addEventListener("click", shareFacebookPost);
+
+        // Create floating bubbles
+        function createBubbles() {
+            const bubbleCount = 15;
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement("div");
+                bubble.classList.add("bubble");
+                const size = Math.random() * 100 + 50;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.top = `${Math.random() * 100}vh`;
+                bubble.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                document.body.appendChild(bubble);
+            }
+        }
+
+        createBubbles();
+        generateQuote(); // Generate an initial quote
+    </script>
+</body>
+</html>
